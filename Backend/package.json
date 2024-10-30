@@ -1,0 +1,25 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "description": "A full stack blog application along with admin panel and user authentication",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon index.js"
+  },
+  "keywords": [
+    "blog_App"
+  ],
+  "author": "Hamza Hussain",
+  "license": "ISC",
+  "dependencies": {
+    "cloudinary": "^2.5.1",
+    "dotenv": "^16.4.5",
+    "express": "^4.21.1",
+    "express-fileupload": "^1.5.1",
+    "mongoose": "^8.7.3",
+    "nodemon": "^3.1.7",
+    "validator": "^13.12.0"
+  }
+}
