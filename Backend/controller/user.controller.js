@@ -1,5 +1,6 @@
 import { User } from "../models/user.models.js"
 import { v2 as cloudinary } from 'cloudinary';
+import bcrypt from "bcryptjs"
 
 export const register = async (req, res) => {
     if (!req.files || Object.keys(req.files).length === 0) {
@@ -27,9 +28,10 @@ export const register = async (req, res) => {
         console.log(cloudinaryResponse.error);
 
     }
+    const hashedPassword = await bcrypt.hash(password, 10)
 
     const newUser = new User({
-        email, name, password, education, role, photo: {
+        email, name, password: hashedPassword, education, role, photo: {
             public_id: cloudinaryResponse.public_id,
             url: cloudinaryResponse.url
         }
