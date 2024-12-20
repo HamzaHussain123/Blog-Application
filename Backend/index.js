@@ -5,6 +5,7 @@ import fileUpload from 'express-fileupload'
 import { v2 as cloudinary } from 'cloudinary';
 
 import userRoute from "./routes/user.routes.js"
+import blogRoute from "./routes/blog.routes.js"
 
 const app = express()
 dotenv.config()
@@ -35,6 +36,7 @@ try {
 
 //Routes
 app.use("/api/users", userRoute)
+app.use("/api/blogs", blogRoute)
 
 // Cloudinary 
 
