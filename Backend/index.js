@@ -3,6 +3,7 @@ import dotenv from 'dotenv'
 import mongoose from 'mongoose'
 import fileUpload from 'express-fileupload'
 import { v2 as cloudinary } from 'cloudinary';
+import cookieParser from 'cookie-parser';
 
 import userRoute from "./routes/user.routes.js"
 import blogRoute from "./routes/blog.routes.js"
@@ -16,6 +17,7 @@ const MONGO_URL = process.env.MONGO_DB_URI
 
 //middleware
 app.use(express.json())
+app.use(cookieParser())
 
 //file upload middleware
 app.use(fileUpload({
