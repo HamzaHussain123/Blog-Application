@@ -33,8 +33,7 @@ export const isAuthenticated = async (req, res, next) => {
 // Authorization
 export const isAdmin = (...roles) => {
     return (req, res, next) => {
-        console.log("Current user role:", req.user.role);
-        console.log("Allowed roles:", roles);
+
 
         if (!roles.includes(req.user.role)) {
             return res.status(403).json({ error: `User with role ${req.user.role} not allowed` })

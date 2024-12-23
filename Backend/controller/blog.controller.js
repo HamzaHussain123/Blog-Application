@@ -1,5 +1,7 @@
 import { Blog } from "../models/blog.models.js"
 import { v2 as cloudinary } from 'cloudinary';
+import mongoose from 'mongoose'
+
 
 export const createBlog = async (req, res) => {
     try {
@@ -60,4 +62,52 @@ export const createBlog = async (req, res) => {
         return res.status(500).json({ error: "Internal Server Error" })
 
     }
+}
+
+export const deleteBlog = async (req, res) => {
+    const { id } = req.params
+    const blog = await Blog.findById(id)
+    if (!blog) {
+        return res.status(404).json({ message: "Blog not found" })
+    }
+    await blog.deleteOne();
+    return res.status(200).json({ message: "Blog deleted successfully" })
+}
+
+export const getAllBlogs = async (req, res) => {
+    const allBlogs = await Blog.find()
+    res.status(200).json(allBlogs)
+}
+
+
+export const getSingleBlogs = async (req, res) => {
+    const { id } = req.params
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+        return res.status(400).json({ message: "Invalid Blog id" })
+    }
+    const blog = await Blog.findById(id);
+    if (!blog) {
+        return res.status(404).json({ message: "Blog not found" })
+    }
+    res.status(200).json(blog)
+}
+
+
+
+export const getMyBlogs = async (req, res) => {
+    const createdBy = req.user._id
+    const myBlogs = await Blog.find({ createdBy })
+    res.status(200).json(myBlogs)
+}
+
+export const updateBlogs = async (req, res) => {
+    const { id } = req.params;
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+        return res.status(400).json({ message: "Invalid Blog id" })
+    }
+    const updatedBlog = await Blog.findByIdAndUpdate(id, req.body, { new: true })
+    if (!updatedBlog) {
+        return res.status(404).json({ message: "Blog not found" })
+    }
+    res.status(200).json(updatedBlog)
 }
