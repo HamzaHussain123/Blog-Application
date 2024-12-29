@@ -24,14 +24,7 @@ span {
 .content-wrapper {
   min-height: 100vh;
   /* Modern gradient background */
-  background: linear-gradient(
-    135deg,
-    #f0f8ff 0%,
-    #e6f3ff 25%,
-    #f0f8ff 50%,
-    #e1f1ff 75%,
-    #f0f8ff 100%
-  );
+  background: linear-gradient(135deg, #ebf4ff 0%, #c3dafe 50%, #a3bffa 100%);
   background-size: 400% 400%;
   animation: gradientFlow 15s ease infinite;
   position: relative;

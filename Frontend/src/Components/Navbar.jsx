@@ -15,7 +15,7 @@ const Navbar = () => {
                     {/* Logo */}
                     <div className='flex-shrink-0'>
                         <Link to='/' className='text-2xl font-extrabold tracking-tight'>
-                            <span className='bg-gradient-to-r from-gray-800 to-gray-600 bg-clip-text text-transparent'>
+                            <span className='bg-gradient-to-r from-blue-600 to-blue-800 bg-clip-text text-transparent'>
                                 Hamza
                             </span>
                             <span className='bg-gradient-to-r from-green-500 to-emerald-600 bg-clip-text text-transparent'>
