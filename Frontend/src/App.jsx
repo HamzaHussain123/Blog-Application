@@ -35,7 +35,7 @@ const App = () => {
 
 
       </Routes>
-      {/* {!hideNavbarFooter && <Footer />} */}
+      {!hideNavbarFooter && <Footer />}
     </div>
   )
 }
