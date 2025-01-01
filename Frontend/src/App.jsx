@@ -16,8 +16,7 @@ const App = () => {
   const location = useLocation()
   const hideNavbarFooter = ["/dashboard", "/login", "/register"].includes(location.pathname)
 
-  const { blogs } = useAuth()
-  console.log(blogs);
+
 
   return (
     <div className="content-wrapper">
@@ -25,7 +24,7 @@ const App = () => {
       }
       {/* Routes */}
       <Routes>
-        {/* <Route exact path="/" element={<Home />} /> */}
+        <Route exact path="/" element={<Home />} />
         <Route exact path="/blogs" element={<Blogs />} />
         {/* <Route exact path="/about" element={<About />} /> */}
         <Route exact path="/contact" element={<Contact />} />
@@ -36,7 +35,7 @@ const App = () => {
 
 
       </Routes>
-      {/* {!hideNavbarFooter && <Footer />}  */}
+      {/* {!hideNavbarFooter && <Footer />} */}
     </div>
   )
 }

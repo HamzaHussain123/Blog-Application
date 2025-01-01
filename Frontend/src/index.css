@@ -76,3 +76,28 @@ body {
   margin: 0;
   padding: 0;
 }
+.carousel-container {
+  padding: 20px 0 40px 0;
+}
+
+.custom-dot-list-style {
+  bottom: 0 !important;
+}
+
+.custom-dot-list-style button {
+  border: none;
+  background: #e2e8f0;
+  width: 8px;
+  height: 8px;
+  margin: 0 4px;
+}
+
+.custom-dot-list-style .react-multi-carousel-dot--active button {
+  background: #3b82f6;
+}
+
+.react-multi-carousel-item {
+  display: flex;
+  justify-content: center;
+  padding: 1rem;
+}

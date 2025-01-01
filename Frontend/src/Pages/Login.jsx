@@ -39,8 +39,8 @@ const Login = () => {
                 }),
                 {
                     pending: 'Logging in...',
-                    success: 'Login successful! 👍',
-                    error: 'Login failed 🤯'
+                    success: 'User logged in successfully',
+                    error: 'Login failed!!'
                 }
             );
 
