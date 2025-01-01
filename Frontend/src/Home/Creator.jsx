@@ -1,6 +1,5 @@
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
 
 const Creator = () => {
     const [admin, setAdmin] = useState([])
@@ -17,7 +16,7 @@ const Creator = () => {
     }, [])
 
     return (
-        <div className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16'>
+        <div className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-9'>
             <div className='space-y-3 mb-16 text-center'>
                 <h1 className='text-5xl font-bold text-gray-900 tracking-tight'>
                     Popular Creators
@@ -27,11 +26,10 @@ const Creator = () => {
                 </p>
             </div>
 
-            <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8'>
+            <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 my-9'>
                 {admin && admin.length > 0 ? (
                     admin.slice(0, 4).map((element, index) => (
-                        <Link
-                            to={`/blog/${element._id}`}
+                        <div
                             key={element._id}
                             className='group relative block bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-1'
                         >
@@ -54,7 +52,17 @@ const Creator = () => {
                                     <div className='w-full h-1 bg-gradient-to-r from-indigo-500 to-purple-600 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left rounded-full'></div>
                                 </div>
                             </div>
-                        </Link>
+                            <div className='p-4 space-y-2'>
+                                <h3 className='text-xl font-semibold text-black transition-all duration-300'>
+                                    {element.name}
+                                </h3>
+                                <div className='flex items-center gap-2'>
+                                    <span className='inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-indigo-100 text-indigo-800'>
+                                        {element.role}
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
                     ))
                 ) : (
                     <div className="col-span-4 text-center py-16">
