@@ -47,7 +47,7 @@ const Creators = () => {
     }
 
     return (
-        <div className='min-h-screen bg-gradient-to-b from-blue-200 via-blue-100 to-white pt-24 pb-16 px-4'>
+        <div className='min-h-screen bg-gradient-to-b from-blue-200 via-blue-150 to-white pt-24 pb-16 px-4'>
             <motion.div
                 initial={{ opacity: 0, y: -20 }}
                 animate={{ opacity: 1, y: 0 }}

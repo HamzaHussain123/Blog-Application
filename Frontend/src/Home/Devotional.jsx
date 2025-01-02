@@ -5,6 +5,13 @@ import { Link } from 'react-router-dom'
 const Devotional = () => {
     const { blogs } = useAuth()
     const devotionalBlogs = blogs?.filter((blog) => blog.category === "Devotion")
+    const [isLoading, setIsLoading] = React.useState(true)
+
+    React.useEffect(() => {
+        if (blogs) {
+            setTimeout(() => setIsLoading(false), 800)
+        }
+    }, [blogs])
 
     return (
         <main className="relative py-16">
@@ -20,12 +27,22 @@ const Devotional = () => {
                     </div>
 
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
-                        {devotionalBlogs && devotionalBlogs.length > 0 ? (
+                        {isLoading ? (
+                            [...Array(8)].map((_, index) => (
+                                <div key={index} className="bg-white rounded-2xl overflow-hidden shadow-md animate-pulse">
+                                    <div className="relative aspect-[16/10] bg-gray-200"></div>
+                                    <div className="p-6">
+                                        <div className="h-4 bg-gray-200 rounded w-3/4 mb-4"></div>
+                                        <div className="h-3 bg-gray-200 rounded w-1/4"></div>
+                                    </div>
+                                </div>
+                            ))
+                        ) : devotionalBlogs && devotionalBlogs.length > 0 ? (
                             devotionalBlogs.map((blog, index) => (
                                 <Link
                                     to={`/blog/${blog._id}`}
                                     key={blog._id}
-                                    className="group relative bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-1"
+                                    className="group relative bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-1 animate-fadeIn"
                                 >
                                     <div className="relative aspect-[16/10] overflow-hidden">
                                         <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
@@ -58,8 +75,8 @@ const Devotional = () => {
                                 </Link>
                             ))
                         ) : (
-                            <div className="col-span-4 text-center py-16">
-                                <div className="text-gray-400 text-xl">No blogs available</div>
+                            <div className="text-center py-8">
+                                <div className="text-gray-400 text-lg">No blogs available</div>
                             </div>
                         )}
                     </div>
