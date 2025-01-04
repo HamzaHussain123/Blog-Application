@@ -1,7 +1,46 @@
 import React from 'react'
 import { FaEnvelope, FaMapMarkedAlt, FaPhone } from 'react-icons/fa'
+import { useForm } from 'react-hook-form';
+import axios from 'axios';
+import { toast } from 'react-toastify';
+
 
 const Contact = () => {
+    const {
+        register,
+        handleSubmit,
+        reset,
+        formState: { errors },
+    } = useForm();
+
+    const onSubmit = async (data) => {
+        try {
+            const response = await axios.post(
+                "https://api.web3forms.com/submit",
+                {
+                    access_key: '3148b3b7-6eef-4396-8657-b68b150ccbd7',
+                    name: data.username,
+                    email: data.email,
+                    message: data.message
+                },
+                {
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json'
+                    }
+                }
+            );
+
+            if (response.data.success) {
+                toast.success("Message sent successfully");
+                reset();
+            }
+        } catch (error) {
+            console.log('Error details:', error.response?.data);
+            toast.error("An error occurred: " + (error.response?.data?.message || error.message));
+        }
+    }
+
     return (
         <div className='bg-gradient-to-b from-blue-200 via-blue-100 to-white min-h-screen flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8'>
             <div className='max-w-4xl w-full bg-white rounded-2xl shadow-xl p-8 transform hover:scale-[1.02] transition-transform duration-300'>
@@ -16,27 +55,37 @@ const Contact = () => {
                     {/* Form Section */}
                     <div className='w-full md:w-1/2'>
                         <h3 className='text-xl font-semibold text-gray-800 mb-6'>Send us a message</h3>
-                        <form className='space-y-5'>
+                        <form onSubmit={handleSubmit(onSubmit)} className='space-y-5' >
                             <div className='transform transition-all duration-300 hover:translate-x-2'>
                                 <input type="text"
                                     name='username'
                                     placeholder='Your Name'
-                                    className='w-full px-4 py-3 border-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent transition-all duration-300' />
+                                    className='w-full px-4 py-3 border-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent transition-all duration-300'
+                                    {...register('username', { required: true })} />
+                                {errors.username && <p className='text-sm text-red-500 font-semibold'>This field is required.</p>}
                             </div>
 
                             <div className='transform transition-all duration-300 hover:translate-x-2'>
                                 <input type="email"
                                     name='email'
                                     placeholder='Your Email'
-                                    className='w-full px-4 py-3 border-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent transition-all duration-300' />
+                                    className='w-full px-4 py-3 border-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent transition-all duration-300'
+                                    {...register('email', { required: true })}
+                                />
+                                {errors.email && <p className='text-sm text-red-500 font-semibold'>This field is required.</p>}
                             </div>
+
+
 
                             <div className='transform transition-all duration-300 hover:translate-x-2'>
                                 <textarea
                                     name='message'
                                     placeholder='Your Message'
                                     rows="4"
-                                    className='w-full px-4 py-3 border-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent transition-all duration-300' />
+                                    className='w-full px-4 py-3 border-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent transition-all duration-300'
+                                    {...register('message', { required: true })}
+                                />
+                                {errors.message && <p className='text-sm text-red-500 font-semibold'>This field is required.</p>}
                             </div>
 
                             <div>
