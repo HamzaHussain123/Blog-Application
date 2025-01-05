@@ -5,34 +5,54 @@ export const AuthContext = createContext()
 
 export const AuthProvider = ({ children }) => {
     const [blogs, setBlogs] = useState([])
+    const [profile, setProfile] = useState()
     const [isAuthenticated, setIsAuthenticated] = useState(false)
+    const [loading, setLoading] = useState(true)
 
     useEffect(() => {
-        // Check if user is authenticated when component mounts
-        const token = document.cookie.includes('jwt')
-        setIsAuthenticated(token)
-    }, [])
+        const token = document.cookie.includes('jwt');
+        setIsAuthenticated(token);
 
-    useEffect(() => {
-        // Only fetch blogs if user is authenticated
-        if (isAuthenticated) {
-            const fetchBlogs = async () => {
-                try {
-                    const response = await axios.get(
-                        "http://localhost:4001/api/blogs/all-blogs",
-                        {
-                            withCredentials: true,
-                            headers: {
-                                'Accept': 'application/json',
-                            }
-                        }
-                    );
-                    setBlogs(response.data);
-                } catch (error) {
-                    console.log(error)
+        if (token) {
+            fetchProfile();
+        } else {
+            setLoading(false);
+        }
+    }, []);
+
+    const fetchProfile = async () => {
+        try {
+            const response = await axios.get(
+                "http://localhost:4001/api/users/my-profile",
+                { withCredentials: true, headers: { 'Content-Type': 'application/json' } }
+            );
+            setProfile(response.data);
+        } catch (error) {
+            console.log("Profile Fetch Error:", error);
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    const fetchBlogs = async () => {
+        try {
+            const response = await axios.get(
+                "http://localhost:4001/api/blogs/all-blogs",
+                {
+                    withCredentials: true,
+                    headers: {
+                        'Accept': 'application/json',
+                    }
                 }
-            };
+            );
+            setBlogs(response.data);
+        } catch (error) {
+            console.log("Blogs Fetch Error:", error);
+        }
+    };
 
+    useEffect(() => {
+        if (isAuthenticated) {
             fetchBlogs();
         }
     }, [isAuthenticated]);
@@ -42,7 +62,10 @@ export const AuthProvider = ({ children }) => {
             blogs,
             setBlogs,
             isAuthenticated,
-            setIsAuthenticated
+            setIsAuthenticated,
+            profile,
+            setProfile,
+            loading
         }}>
             {children}
         </AuthContext.Provider>

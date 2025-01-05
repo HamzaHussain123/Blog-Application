@@ -44,13 +44,18 @@ const Login = () => {
                 }
             );
 
+            // Set the JWT token in cookies
+            document.cookie = `jwt=${data.token}; path=/`; // Adjust according to your API response
+
+            // Optionally, update the authentication state
+            // You might need to use a context or prop to set isAuthenticated here
+
             // Clear form fields after successful login
             setEmail("");
             setPassword("");
             setRole("");
 
         } catch (error) {
-
             console.error("Login error:", error);
         }
     }
