@@ -1,11 +1,16 @@
 import axios from 'axios'
 import React, { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { useAuth } from '../Context/AuthProvider';
 
 
 const Register = () => {
+
+    const { isAuthenticated,
+        setIsAuthenticated, } = useAuth()
+    const navigateTo = useNavigate()
     const [name, setName] = useState("")
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
@@ -71,6 +76,7 @@ const Register = () => {
             );
 
             // Clear form fields after successful registration
+            setIsAuthenticated(true)
             setName("");
             setEmail("");
             setPassword("");
@@ -78,6 +84,7 @@ const Register = () => {
             setEducation("");
             setPhoto("");
             setPhotoPreview("");
+            navigateTo("/")
 
         } catch (error) {
             const errorMessage = error.response?.data?.message || error.message || "Registration failed";

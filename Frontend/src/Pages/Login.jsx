@@ -1,10 +1,14 @@
 import axios from 'axios'
 import React, { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { useAuth } from '../Context/AuthProvider';
 
 const Login = () => {
+    const { isAuthenticated,
+        setIsAuthenticated, } = useAuth()
+    const navigateTo = useNavigate()
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
     const [role, setRole] = useState("")
@@ -51,9 +55,11 @@ const Login = () => {
             // You might need to use a context or prop to set isAuthenticated here
 
             // Clear form fields after successful login
+            setIsAuthenticated(true)
             setEmail("");
             setPassword("");
             setRole("");
+            navigateTo("/")
 
         } catch (error) {
             console.error("Login error:", error);

@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { useAuth } from '../Context/AuthProvider'
 import { useNavigate } from 'react-router-dom';
-import { toast } from 'react-toastify';
+import toast, { Toaster } from 'react-hot-toast';
 import axios from 'axios';
 import { IoMdMenu } from "react-icons/io";
 import { FaArrowLeft, FaBlog, FaUser, FaHome, FaSignOutAlt } from "react-icons/fa";
@@ -12,17 +12,7 @@ const Sidebar = ({ setComponent }) => {
     const { profile, setIsAuthenticated } = useAuth();
     const navigateTo = useNavigate();
     const [show, setShow] = useState(false);
-    // const [isMobile, setIsMobile] = useState(window.innerWidth <= 640); // Detect screen size
 
-    // const handleResize = () => {
-    //     setIsMobile(window.innerWidth <= 640);
-    //     if (window.innerWidth > 640) setShow(false); // Ensure sidebar is always visible on larger screens
-    // };
-
-    // useEffect(() => {
-    //     window.addEventListener("resize", handleResize);
-    //     return () => window.removeEventListener("resize", handleResize);
-    // }, []);
 
     const handleComponents = (value) => {
         setComponent(value);
@@ -38,8 +28,8 @@ const Sidebar = ({ setComponent }) => {
         e.preventDefault();
         try {
             await axios.get("http://localhost:4001/api/users/logout", { withCredentials: true });
-            setIsAuthenticated(false);
             toast.success("Logged out successfully!");
+            setIsAuthenticated(false);
             navigateTo("/login");
 
         } catch (error) {
